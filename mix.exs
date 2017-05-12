@@ -33,7 +33,6 @@ defmodule Rentapay.Mixfile do
    [
      {:maru, "~> 0.11"},
      {:maru_entity, "~> 0.2.0"},
-     {:eye_drops, "~> 1.3"},
      {:postgrex, ">= 0.0.0"},
      {:ecto, "~> 2.1"},
      {:inflex, "~> 1.7.0" },
