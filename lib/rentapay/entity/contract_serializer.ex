@@ -1,5 +1,6 @@
 defmodule Rentapay.Entity.ContractSerializer do
   use Maru.Entity
+  require Rentapay.Entity.UserSerializer
   expose :id
   expose :state
   expose :started_at

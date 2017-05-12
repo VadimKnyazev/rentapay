@@ -1,4 +1,5 @@
 defmodule Rentapay.Entity.RentSerializer do
+  require Rentapay.Entity.UserSerializer 
   use Maru.Entity
   expose :id
   expose :house
