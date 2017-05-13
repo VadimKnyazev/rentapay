@@ -1,4 +1,4 @@
-defmodule Rentapay.Entity.RentSerializer do
+defmodule Rentapay.Entity.RentUnlinkedSerializer do
   require Rentapay.Entity.UserSerializer 
   use Maru.Entity
   import Ecto.Query
@@ -15,12 +15,5 @@ defmodule Rentapay.Entity.RentSerializer do
   expose :description
   expose :owner, [using: Rentapay.Entity.UserSerializer], fn(rent, _options) ->
     Rentapay.Repo.get(Rentapay.Entity.User, rent.owner_id)
-  end
-  expose :previews, [using: List[Rentapay.Entity.PreviewUnlinkedSerializer]], fn(rent, _options) ->
-    id = rent.id
-    query = 
-      from p in Rentapay.Entity.Preview,
-      where: p.rent_id == ^id
-    Rentapay.Repo.all(query)
   end
 end

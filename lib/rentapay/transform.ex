@@ -4,7 +4,8 @@ defmodule Rentapay.Transform do
     Map.keys(map) 
     |> List.foldl(%{}, fn(x, acc) -> Map.put(acc, Inflex.camelize(x, :lower), process_value(map[x])) end) 
   end
-
+  
+  defp process_value(%NaiveDateTime{} = mp), do: mp
   defp process_value(value) when is_map(value) do
     camelize_keys(value)
   end

@@ -21,6 +21,8 @@ defmodule Rentapay.Router.Host do
       params do
         requires :street
         requires :house
+        requires :floor, type: Integer
+        requires :flat_number, type: Integer, source: "flatNumber"
         requires :description
         requires :rooms, type: Integer, values: 1..10
         requires :price, type: Integer

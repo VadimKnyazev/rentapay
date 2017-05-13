@@ -7,6 +7,7 @@ defmodule Rentapay do
   end
   defmodule API do
     use Maru.Router
+    plug CORSPlug 
     #after do
       #end
     plug Plug.Logger

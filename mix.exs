@@ -36,7 +36,8 @@ defmodule Rentapay.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:ecto, "~> 2.1"},
      {:inflex, "~> 1.7.0" },
-     {:seedex, "~> 0.1.2"}
+     {:seedex, "~> 0.1.2"},
+     {:cors_plug, "~> 1.2"},
    ]
   end
 end

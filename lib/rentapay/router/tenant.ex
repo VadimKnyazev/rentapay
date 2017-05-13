@@ -21,7 +21,7 @@ defmodule Rentapay.Router.Tenant do
 
     namespace :previews do
       params do
-        requires :rent_id, type: Integer
+        requires :rent_id, type: Integer, source: "rentId"
       end
       post do
         attrs = %Rentapay.Entity.Preview{rent_id: params[:rent_id], contragent_id: tenant_id(), state: "pending"}

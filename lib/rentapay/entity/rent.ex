@@ -4,6 +4,9 @@ defmodule Rentapay.Entity.Rent do
   schema "rents" do
     field :street, :string
     field :house, :string
+    field :floor, :integer
+    field :flat_number, :integer
+    field :rooms, :integer
     field :price, :integer
     field :minimal_rent_months, :integer
     field :credit_payment_enabled, :boolean
