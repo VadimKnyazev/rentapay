@@ -7,7 +7,16 @@ defmodule Rentapay do
   end
   defmodule API do
     use Maru.Router
-    plug CORSPlug, headers: ["*"], expose: ["*"], methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    plug CORSPlug, 
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], 
+      expose: ["Authorization", "Content-Type", "Accept", "Origin",
+                    "User-Agent", "DNT","Cache-Control", "X-Mx-ReqToken",
+                    "Keep-Alive", "X-Requested-With", "If-Modified-Since",
+                    "X-CSRF-Token"],
+      headers: ["Authorization", "Content-Type", "Accept", "Origin",
+                    "User-Agent", "DNT","Cache-Control", "X-Mx-ReqToken",
+                    "Keep-Alive", "X-Requested-With", "If-Modified-Since",
+                    "X-CSRF-Token"]
     # headers: ["Authorization", "Content-Type", "Accept", "Origin",
     #             "User-Agent", "DNT","Cache-Control", "X-Mx-ReqToken",
     #                "Keep-Alive", "X-Requested-With", "If-Modified-Since",
