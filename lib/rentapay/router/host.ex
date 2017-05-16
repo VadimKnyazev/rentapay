@@ -1,26 +1,28 @@
 defmodule Rentapay.Router.Host do
   import Rentapay.Transform
   import Rentapay.Seeds
+  import Rentapay.JSON
+  #import Rentapay.Session
+  alias Rentapay.Entity, as: E
+  alias Rentapay.DS.Host, as: DS
   use Maru.Router
   namespace :host do
-
     namespace :rents do
       get do
-        rents = Rentapay.Repo.all(Rentapay.Entity.Rent)
-        response = Rentapay.Entity.RentSerializer.serialize(rents) |> camelize_keys
+        current_user = conn.private.current_user
+        response = DS.rents(current_user["id"]) |> serialize 
         json(conn, response)
       end
       route_param :id, type: Integer do
         get do
-          rent = Rentapay.Repo.get(Rentapay.Entity.Rent, params[:id])
-                 |> Rentapay.Entity.RentSerializer.serialize
-                 |> camelize_keys
-          json(conn, rent)
+          current_user = conn.private.current_user
+          json conn, DS.rent(current_user["id"], params[:id]) |> serialize
         end
       end
       params do
         requires :street
         requires :house
+        requires :entrance, type: Integer
         requires :floor, type: Integer
         requires :flat_number, type: Integer, source: "flatNumber"
         requires :description
@@ -32,38 +34,36 @@ defmodule Rentapay.Router.Host do
         requires :credit_payment_enabled, type: Boolean, default: false, source: "creditPaymentEnabled"
       end
       post do
-        attrs = struct(Rentapay.Entity.Rent, Map.merge(params, %{owner_id: host_id()}))
+        current_user = conn.private.current_user
+        attrs = struct(Rentapay.Entity.Rent, Map.merge(params, %{owner_id: current_user["id"]}))
         {:ok, data} = Rentapay.Repo.insert(attrs)
-        response = data |> Rentapay.Entity.RentSerializer.serialize |> camelize_keys
+        response = serialize(data) 
         json(conn, response)
       end
     end
 
     namespace :previews do
       get do
-        previews = Rentapay.Repo.all(Rentapay.Entity.Preview)
-        response = Rentapay.Entity.PreviewSerializer.serialize(previews)
+        current_user = conn.private.current_user
+        response = DS.previews(current_user["id"]) |> serialize
         json(conn, response)
       end
 
       route_param :id, type: Integer do
         get do
-          preview = Rentapay.Repo.get(Rentapay.Entity.Preview, params[:id])
-                    |> Rentapay.Entity.PreviewSerializer.serialize
-                    |> camelize_keys
-          json(conn, preview)
+          current_user = conn.private.current_user
+          response = DS.preview(current_user["id"], params[:id]) |> serialize
+          json(conn, response)
         end
         params do
           requires :state, type: String, values: ["rejected", "accepted"]
         end
         patch do
-          {:ok, result} = Rentapay.Repo.get(Rentapay.Entity.Preview, params[:id])
+          current_user = conn.private.current_user
+          {:ok, result} = DS.preview(current_user["id"], params[:id]) 
                           |> Ecto.Changeset.change(state: params[:state])
                           |> Rentapay.Repo.update
-          response = result
-                     |> Rentapay.Entity.PreviewSerializer.serialize
-                     |> camelize_keys
-          json(conn, response)          
+          json(conn, serialize(result))          
         end
       end
     end
@@ -82,23 +82,21 @@ defmodule Rentapay.Router.Host do
         requires :rent_id, type: Integer, source: "rentId"
       end
       post do
+        current_user = conn.private.current_user
         attrs = struct(Rentapay.Entity.Contract, Map.merge(params, %{state: "pending"}))
         {:ok, data} = Rentapay.Repo.insert(attrs)
-        response = data |> Rentapay.Entity.ContractSerializer.serialize |> camelize_keys
-        json(conn, response)
+        json(conn, serialize(data))
       end
       get do
-        contracts = Rentapay.Repo.all(Rentapay.Entity.Contract)
-        response = Rentapay.Entity.ContractSerializer.serialize(contracts)
-                   |> camelize_keys
+        current_user = conn.private.current_user
+        response = DS.contracts(current_user["id"]) |> serialize
         json(conn, response)
       end
       route_param :id, type: Integer do
         get do
-          contract = Rentapay.Repo.get(Rentapay.Entity.Contract, params[:id])
-                     |> Rentapay.Entity.ContractSerializer.serialize
-                     |> camelize_keys
-          json(conn, contract)
+          current_user = conn.private.current_user
+          response = DS.contract(current_user["id"], params[:id]) |> serialize
+          json(conn, response)
         end
       end
     end

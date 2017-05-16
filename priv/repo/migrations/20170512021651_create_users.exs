@@ -6,6 +6,7 @@ defmodule Rentapay.Repo.Migrations.CreateUsers do
       add :login, :string, size: 100
       add :first_name, :string, size: 50
       add :last_name, :string, size: 50
+      add :secured_password, :string, size: 250
     end
   end
 end

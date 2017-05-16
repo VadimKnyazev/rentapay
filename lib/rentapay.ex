@@ -8,14 +8,15 @@ defmodule Rentapay do
   defmodule API do
     use Maru.Router
     plug CORSPlug 
-    #after do
-      #end
     plug Plug.Logger
     plug Plug.Parsers,
       pass: ["*/*"],
       json_decoder: Poison,
       parsers: [:json]
+    plug Rentapay.Middleware.JWT
     mount Rentapay.Router.Host
     mount Rentapay.Router.Tenant
+    mount Rentapay.Router.System
+    mount Rentapay.Router.Account
   end
 end

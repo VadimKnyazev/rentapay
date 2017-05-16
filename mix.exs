@@ -16,7 +16,7 @@ defmodule Rentapay.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [ mod: {Rentapay, []},
-      extra_applications: [:logger],
+      extra_applications: [:logger, :comeonin]
     ]
   end
 
@@ -38,6 +38,8 @@ defmodule Rentapay.Mixfile do
      {:inflex, "~> 1.7.0" },
      {:seedex, "~> 0.1.2"},
      {:cors_plug, "~> 1.2"},
+     {:comeonin, "~> 3.0"},
+     {:joken, "~> 1.4.1"}
    ]
   end
 end

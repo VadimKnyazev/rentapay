@@ -5,8 +5,9 @@ defmodule Rentapay.Entity.RentSerializer do
   expose :id
   expose :street
   expose :house
-  expose :flat_number
+  expose :entrance
   expose :floor
+  expose :flat_number
   expose :rooms
   expose :price
   expose :minimal_rent_months
