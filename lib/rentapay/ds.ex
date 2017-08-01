@@ -3,8 +3,8 @@ defmodule Rentapay.DS do
   import Rentapay.Repo
   alias Rentapay.Entity, as: E
   defmodule Host do
-    def rents(host_id), do: with_owner(host_id) |> all
     def rent(host_id, rent_id), do: with_owner(host_id) |> get(rent_id)
+    def rents(host_id), do: with_owner(host_id) |> all
     def previews(host_id), do: select_previews(host_id) |> all
     def preview(host_id, preview_id), do: select_previews(host_id) |> get(preview_id)
     def contracts(host_id), do: select_contracts(host_id) |> all

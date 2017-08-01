@@ -39,7 +39,10 @@ defmodule Rentapay.Mixfile do
      {:seedex, "~> 0.1.2"},
      {:cors_plug, "~> 1.2"},
      {:comeonin, "~> 3.0"},
-     {:joken, "~> 1.4.1"}
+     {:joken, "~> 1.4.1"},
+     {:shape, "~> 0.0.2"},
+     {:tabula, "~> 2.1.1"},
+     {:loki, "~> 1.2.2"}
    ]
   end
 end
